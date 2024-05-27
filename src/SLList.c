@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "sllist.h"
+#include "SLList.h"
 
-#ifndef _LSTACK_C_
-#define _LSTACK_C_
+#ifndef __LSTACK_C_
+#define __LSTACK_C_
 
 #define TRUE 1
 #define FALSE 0
@@ -45,8 +45,8 @@ int sllNNodes(SLList *l){
         if(last!=NULL){
             n++;
             while(last->next!=NULL){
-                last = last->next
-                n++
+                last = last->next;
+                n++;
             }
         }
         return n;
@@ -54,10 +54,25 @@ int sllNNodes(SLList *l){
     return -1;
 }
 
-int sllInsertFirst(SLList *l, void *data){
+int sllInsertFirst(SLList *l, void *data)
+{
     SLNode *newnode;
-    if(l!=NULL){
-        newnode = (SLNode*)malloc(sizeof(SLNode));
+    if (l != NULL)
+    {
+        newnode = (SLNode *)malloc(sizeof(SLNode));
+        if (newnode != NULL)
+          newnode->data = data;
+          newnode->next = l->first;
+          l->first = newnode;
+        return TRUE; 
+    }
+    return FALSE;
+}
+
+int sllInsertLast(SLList *l, void *data){
+    SLNode *newnode, *last;
+    if(l != NULL){
+        newnode = (SLNode *)malloc(sizeof(SLNode));
         if(newnode != NULL){
             newnode->data = data;
             newnode->next = NULL;
@@ -66,7 +81,7 @@ int sllInsertFirst(SLList *l, void *data){
             }
             else{
                 last = l->first;
-                while(last->next!=NULL){
+                while(last->next != NULL){
                     last = last->next;
                 }
                 last->next = newnode;
@@ -121,7 +136,7 @@ int sllInsertBefSpec(SLList *l, void *key, void *data, int (*cmp)(void *, void *
                 newnode->data = data;
                 newnode->next = spec;
                 if(prev != NULL){
-                    prev->next = newnode
+                    prev->next = newnode;
                 }
                 else{
                     l->first = newnode;
@@ -179,7 +194,7 @@ void *sllRemoveSpec(SLList *l, void *key, int (*cmp)(void *, void*)){
     int stat = FALSE;
     if(l != NULL){
         if(l->first != NULL){
-            spec l->first;
+            spec = l->first;
             prev = NULL;
             stat = cmp(spec->data, key);
             while(stat !=TRUE && spec->next != NULL){
@@ -188,7 +203,7 @@ void *sllRemoveSpec(SLList *l, void *key, int (*cmp)(void *, void*)){
                 stat= cmp(spec->data, key);
             }
             if(stat == TRUE){
-                data = spec->data
+                data = spec->data;
                 if(prev == NULL){
                     l->first = spec->next;
                 }
@@ -217,14 +232,14 @@ void *sllGetFirst(SLList *l){
 }
 
 void *sllGetLast(SLList *l){
-    SLNode *last *data;
+    SLNode *last, *data;
     if(l != NULL){
         if(l->first != NULL){
             last = l->first;
             while(last->next != NULL){
                 last = last->next;
             }
-            data = last->data
+            data = last->data;
             return data;
         }
     }

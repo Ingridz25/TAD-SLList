@@ -1,5 +1,5 @@
-#ifndef _SLNODE_H_
-#define _SLLIST_H_
+#ifndef __SLNODE_H_
+#define __SLLIST_H_
 
 typedef struct _slnode_{
     void *data;
@@ -16,4 +16,12 @@ int sllIsEmpty(SLList *l);
 int sllNNodes(SLList *l);
 int sllInsertFirst(SLList *l, void *data);
 int sllInsertLast(SLList *l, void *data);
-int sllInsertAfterSpecQuery(SLList *l)
+int sllInsertAfterSpecQuery(SLList *l, void *key, void *data, int (*cmp)(void*, void*));
+int sllInsertBefSpec(SLList *l, void *key, void* data, int (*cmp)(void*, void*));
+void *sllRemoveFirst(SLList *l);
+void *sllRemoveLast(SLList *l);
+void *sllRemoveSpec(SLList *l, void *key, int (*cmp)(void*, void*));
+void *sllGetFirst(SLList *l);
+void *sllGetLast(SLList *l);
+
+#endif
